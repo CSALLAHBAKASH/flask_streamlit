@@ -1,0 +1,39 @@
+name: Deploy Flask app with Streamlit
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Flask app
+      run: |
+        export FLASK_APP=app.py
+        flask run --host=0.0.0.0 --port=5000 &
+
+    - name: Wait for Flask app to start
+      run: sleep 5
+
+    - name: Test Flask app
+      run: curl http://localhost:5000
+
+    - name: Deploy Streamlit app
+      run: |
+        curl -X POST -d "" http://localhost:5000/streamlit
