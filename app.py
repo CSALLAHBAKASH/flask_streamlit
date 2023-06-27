@@ -15,3 +15,4 @@ def run_streamlit():
 
 if __name__ == '__main__':
     app.run()
+    
