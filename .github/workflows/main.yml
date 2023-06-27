@@ -3,7 +3,7 @@ name: Deploy Flask app with Streamlit
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
